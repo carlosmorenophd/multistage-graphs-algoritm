@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useDijkstra } from "../code/use-multistage";
+import { useMultistage } from "../code/use-multistage";
 
 const useBodyUi = ({ init }) => {
-  const { algorithm, } = useDijkstra({init: {parent: 0}});
+  const { algorithm, } = useMultistage({init: {parent: 0}});
   const [data, setData] = useState(init.data);
   const [alert, setAlert] = useState(false);
   const [result, setResult] = useState(init.result);
@@ -13,12 +13,6 @@ const useBodyUi = ({ init }) => {
     },
     children: [],
   });
-  const [source, setSource] = useState(0);
-
-  const handleChangeSource = (event)  =>
-  {
-    setSource(event.target.valueAsNumber);
-  }
 
   const handleAlertClose = () => {
     setAlert(false);
@@ -94,9 +88,8 @@ const useBodyUi = ({ init }) => {
 
   //Functionality when user click en basic button
   const handleResult = () => {
-    setResult(algorithm(data, source));
-    // setResult(algorithm(data));
-    // setTree(getTree());
+    const resultPrint = [`Minimal path ${algorithm(data)}`];
+    setResult(resultPrint);
   };
 
   return {
@@ -104,10 +97,8 @@ const useBodyUi = ({ init }) => {
     data,
     result,
     tree,
-    source,
 
     handleAlertClose,
-    handleChangeSource,
     handleChangeListValue,
     handleChangeMatrixValue,
     handleListAdd,

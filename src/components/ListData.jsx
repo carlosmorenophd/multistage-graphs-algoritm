@@ -1,15 +1,36 @@
-import { Button, Card, CardActions, CardContent, Grid, Table, TableBody, TableCell, TableRow, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
 
-export const ListData = ({ data, onChangeValue, onAdd, onRemove }) => {
-
+export const ListData = ({ data, onChangeValue, onAdd, onRemove, columns }) => {
+  const contentColumns = columns ? (
+    <TableHead>
+      <TableRow>
+        {columns.map((column, index) => (
+          <TableCell key={index}>{column}</TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  ) : null;
 
   return (
     <Card>
       <CardContent>
         <Table>
+          {contentColumns}
           <TableBody>
             <TableRow>
               {data.map((cell, indexCell) => (
@@ -41,11 +62,7 @@ export const ListData = ({ data, onChangeValue, onAdd, onRemove }) => {
             </Button>
           </Grid>
           <Grid item component="div">
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={onRemove}
-            >
+            <Button variant="contained" color="secondary" onClick={onRemove}>
               <RemoveSharpIcon />
             </Button>
           </Grid>
