@@ -72,7 +72,7 @@ const BodyUi = (props) => {
         <Tree
           data={tree}
           orientation="vertical"
-          nodeSize={{ x: 200, y: 200 }}
+          nodeSize={{ x: 250, y: 100 }}
         />
       </Box>
       <Snackbar open={alert} autoHideDuration={6000} onClose={handleAlertClose}>

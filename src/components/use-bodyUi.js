@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMultistage } from "../code/use-multistage";
 
 const useBodyUi = ({ init }) => {
-  const { algorithm, } = useMultistage({init: {parent: 0}});
+  const { algorithm, getTree } = useMultistage();
   const [data, setData] = useState(init.data);
   const [alert, setAlert] = useState(false);
   const [result, setResult] = useState(init.result);
@@ -88,8 +88,8 @@ const useBodyUi = ({ init }) => {
 
   //Functionality when user click en basic button
   const handleResult = () => {
-    const resultPrint = [`Minimal path ${algorithm(data)}`];
-    setResult(resultPrint);
+    setResult([`Minimal path ${algorithm(data)}`]);
+    setTree(getTree());
   };
 
   return {
