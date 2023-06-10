@@ -1,11 +1,11 @@
-import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Button, List, Snackbar, Typography } from "@mui/material";
 import { MatrixResult } from "./MatrixResult";
-import RouteIcon from '@mui/icons-material/Route';
+import RouteIcon from "@mui/icons-material/Route";
 import MatrixData from "./MatrixData";
 import React from "react";
 import Tree from "react-d3-tree";
 import useBodyUi from "./use-bodyUi";
-import Parameter from "./Parameter";
+import { ListResult } from "./ListResult";
 
 const BodyUi = (props) => {
   const {
@@ -13,8 +13,6 @@ const BodyUi = (props) => {
     tree,
     result,
     alert,
-    source,
-    handleChangeSource,
     handleAlertClose,
     handleResult,
     handleChangeMatrixValue,
@@ -23,15 +21,18 @@ const BodyUi = (props) => {
   } = useBodyUi({
     init: {
       data: [
-        [0, 4, 0, 0, 0, 0, 0, 8, 0],
-        [4, 0, 8, 0, 0, 0, 0, 11, 0],
-        [0, 8, 0, 7, 0, 4, 0, 0, 2],
-        [0, 0, 7, 0, 9, 14, 0, 0, 0],
-        [0, 0, 0, 9, 0, 10, 0, 0, 0],
-        [0, 0, 4, 14, 10, 0, 2, 0, 0],
-        [0, 0, 0, 0, 0, 2, 0, 1, 6],
-        [8, 11, 0, 0, 0, 0, 1, 0, 7],
-        [0, 0, 2, 0, 0, 0, 6, 7, 0]
+        [0, 9, 7, 3, 2, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 4, 2, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 2, 7, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 11, 8, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 6, 5, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 4, 3, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 6, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       ],
       result: [],
     },
@@ -51,9 +52,6 @@ const BodyUi = (props) => {
         />
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Parameter source={source} onChange={handleChangeSource} />
-      </Box>
-      <Box sx={{ mt: 2 }}>
         <Button
           fullWidth
           color="primary"
@@ -61,23 +59,22 @@ const BodyUi = (props) => {
           endIcon={<RouteIcon />}
           onClick={handleResult}
         >
-          Get minimal single path
+          Get low cost path
         </Button>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <MatrixResult
+        <ListResult
           data={result}
-          columns={["Destiny", "Path", "cost"]}
-          title={`Dijkstra's algorithm - Single path from '${source}'`}
+          title={`Multistage result: `}
         />
       </Box>
-      {/* <Box sx={{ height: "100%" }} minHeight="100%">
+      <Box sx={{ height: "100%" }} minHeight="100%">
         <Tree
           data={tree}
           orientation="vertical"
-          nodeSize={{ x: 200, y: 200 }}
+          nodeSize={{ x: 250, y: 100 }}
         />
-      </Box> */}
+      </Box>
       <Snackbar open={alert} autoHideDuration={6000} onClose={handleAlertClose}>
         <Alert
           onClose={handleAlertClose}

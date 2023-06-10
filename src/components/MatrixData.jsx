@@ -7,22 +7,24 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
   TableRow,
   TextField,
 } from "@mui/material";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
 import React from "react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 const MatrixData = ({
+  columns,
   matrix,
-  onChangeValue,
-  onAdd,
-  onRemove,
   readOnlyMode,
-}) => {
 
+  onAdd,
+  onChangeValue,
+  onRemove,
+}) => {
   const getReadOnly = ({ row, column }) => {
     switch (readOnlyMode) {
       case "mainDiagonal":
@@ -32,10 +34,21 @@ const MatrixData = ({
     }
   };
 
+  const contentColumns = columns ? (
+    <TableHead>
+      <TableRow>
+        {columns.map((column, index) => (
+          <TableCell key={index}>{column}</TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  ): null;
+
   return (
     <Card>
       <CardContent>
         <Table>
+          {contentColumns}
           <TableBody>
             {matrix.map((row, indexRow) => {
               return (
@@ -48,11 +61,12 @@ const MatrixData = ({
                         name={`textField-${indexRow}-${indexCell}`}
                         id={`textField-${indexRow}-${indexCell}`}
                         onChange={onChangeValue}
-                        inputProps={
-                          {
-                            readOnly: getReadOnly({row:indexRow, column: indexCell}),
-                          }
-                        }
+                        inputProps={{
+                          readOnly: getReadOnly({
+                            row: indexRow,
+                            column: indexCell,
+                          }),
+                        }}
                       />
                     </TableCell>
                   ))}
@@ -86,12 +100,12 @@ const MatrixData = ({
   );
 };
 
-MatrixData.prototype ={
-  readOnlyMode: PropTypes.oneOf(["","mainDiagonal"]).isRequired,
-}
+MatrixData.prototype = {
+  readOnlyMode: PropTypes.oneOf(["", "mainDiagonal"]).isRequired,
+};
 
 MatrixData.defaultProps = {
   readOnlyMode: "",
-}
+};
 
 export default MatrixData;
